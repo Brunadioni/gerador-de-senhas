@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Senhas</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 12px;
+            width: 320px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(0,0,0,0.4);
+        }
+
+        h1 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            background: #38bdf8;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #0ea5e9;
+        }
+
+        .options {
+            text-align: left;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .options label {
+            display: block;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🔐 Gerador de Senhas</h1>
+
+    <input type="text" id="senha" readonly placeholder="Sua senha aparecerá aqui">
+
+    <div class="options">
+        <label><input type="checkbox" id="maiusculas" checked> Letras maiúsculas</label>
+        <label><input type="checkbox" id="minusculas" checked> Letras minúsculas</label>
+        <label><input type="checkbox" id="numeros" checked> Números</label>
+        <label><input type="checkbox" id="simbolos"> Símbolos</label>
+    </div>
+
+    <button onclick="gerarSenha()">Gerar Senha</button>
+    <button onclick="copiarSenha()">Copiar Senha</button>
+</div>
+
+<script>
+function gerarSenha() {
+    const maiusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const minusculas = "abcdefghijklmnopqrstuvwxyz";
+    const numeros = "0123456789";
+    const simbolos = "!@#$%^&*()_+{}[]<>?/";
+
+    let caracteres = "";
+
+    if (document.getElementById("maiusculas").checked) {
+        caracteres += maiusculas;
+    }
+    if (document.getElementById("minusculas").checked) {
+        caracteres += minusculas;
+    }
+    if (document.getElementById("numeros").checked) {
+        caracteres += numeros;
+    }
+    if (document.getElementById("simbolos").checked) {
+        caracteres += simbolos;
+    }
+
+    if (caracteres === "") {
+        alert("Selecione pelo menos uma opção!");
+        return;
+    }
+
+    let senha = "";
+    for (let i = 0; i < 12; i++) {
+        const randomIndex = Math.floor(Math.random() * caracteres.length);
+        senha += caracteres[randomIndex];
+    }
+
+    document.getElementById("senha").value = senha;
+}
+
+function copiarSenha() {
+    const senha = document.getElementById("senha");
+    senha.select();
+    document.execCommand("copy");
+    alert("Senha copiada!");
+}
+</script>
+
+</body>
+</html>
